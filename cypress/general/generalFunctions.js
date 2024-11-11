@@ -35,11 +35,20 @@ export function GoToSignIn() {
 
   export function getDifferenceMonth( cMonth = null, cYear = null, monthNumber, year ){
     const d = new Date();
-    let currentMonth = (cMonth === null) ? d.getMonth() + 1 : parseFloat(cMonth);
-    let currentYear = (cYear === null) ? d.getDate() : parseInt(cYear);
+    let currentMonth = null;
 
-    console.log("mes de inicio  -> " + currentMonth);
-    console.log("año de inicio -> " + currentYear);
-    console.log('La diferencia en funcion ' + parseInt(monthNumber) - parseInt(currentMonth) +  (12 * (parseInt(year) - parseInt(currentYear))))
-    return parseInt(monthNumber) - parseInt(currentMonth) +  (12 * (parseInt(year) - parseInt(currentYear)));
+    if (cMonth === null){
+      currentMonth = d.getMonth();
+    } else {
+      currentMonth = cMonth;
+    }
+
+    let currentYear = null;
+    if (cYear === null) {
+      currentMonth = d.getFullYear();
+    } else {
+      currentYear = year;
+    }
+
+    return monthNumber - currentMonth +  (12 * (year - currentYear));
   }

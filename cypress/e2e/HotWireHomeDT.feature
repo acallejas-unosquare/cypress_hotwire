@@ -8,5 +8,6 @@ Then Look for the destination '<destination>'
 Then Set check-in '<check_in>' and check-out '<check_out>'
 Examples:
     | destination | check_in | check_out |
-    | Boston (and vicinity), Massachusetts, United States of America | 01/06/2025 | 05/08/2025 |
+    | Boston (and vicinity), Massachusetts, United States of America | 01/10/2025 | 01/15/2025 |
+Then Find a Hotel
     

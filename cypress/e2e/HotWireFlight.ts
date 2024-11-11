@@ -1,8 +1,12 @@
 import { When, Then, Given } from "@badeball/cypress-cucumber-preprocessor";
 import BookingHomePageObject from "../Pages/HotWireHomePageObject";
+import BookingFlightPageObject from '../Pages/HotWireFlightPageObjects';
 
 beforeEach(() => {
     cy.viewport(1600, 720);
+    cy.intercept('https://201-141-126-14_s-189-216-110-10_ts-1731335484-clienttons-s.akamaihd.net/eum/results.txt');
+    cy.intercept('https://www.uciservice.com/ds/api/v1/toolkit/Homepage/30031/en_US/default');
+    cy.intercept('https://www.hotwire.com/api/uisprime/track');
 });
 
 
@@ -22,13 +26,6 @@ Then("Look for the destination", ( destination ) => {
     BookingHomePageObject.searchDestination( destination );
 });
 
-Then("Set the check-in", ( checkIn ) => {
-    BookingHomePageObject.setCheckIn( checkIn );
-});
-
-Then("Set the check-out", ( checkOut ) => {
-    BookingHomePageObject.setCheckOut( checkOut );
-});
 
 Then("Find a Hotel", () => {
     BookingHomePageObject.findAHotel();
@@ -36,6 +33,11 @@ Then("Find a Hotel", () => {
 
 Then("Select the Flights tab", () => {
     BookingHomePageObject.selectFlightTab();
+});
+
+Then('set the origin {string} and destination {string}', (origin, destination) => {
+    BookingFlightPageObject.searchOrigin( origin );
+    BookingFlightPageObject.searchFlightDestination( destination );
 });
 
 

@@ -13,7 +13,7 @@ class BookingHomePageObject{
         getCheckCalendar: () => cy.get("#input1-farefinder-hotel-date"),
         getCurrentMonth: () => cy.get('.month > h4 > span'),
         getNextMonthBtn: () => cy.get('button > span').contains('Next month')
-    }   
+    }
 
     ValidateMainPage(){
         this.elements.FlightsMenu().should('be.visible');
@@ -34,11 +34,10 @@ class BookingHomePageObject{
     searchDestination( destination ) {
         this.elements.SearchBar().type(destination);
         cy.get('.container-fluid').click();
-        //this.elements.SearchBar().type('{esc}');
     }
 
     setDates( checkIn, checkOut ) {
-        let checkInDay = parseInt(checkIn.substring(3,5)) > 9 ? parseInt(checkIn.substring(3,5)) : parseInt(checkIn.substring(4,5));
+        let checkInDay = parseInt(checkIn.substring(3,5));
         let checkInMonth = checkIn.substring(0,2);
         let checkInYear = checkIn.substring(6,10);
                 
@@ -47,16 +46,14 @@ class BookingHomePageObject{
         this.elements.getCheckCalendar().click({force: true});
 
         // CheckIn
-        let n = getDifferenceMonth(checkInMonth, checkInYear);
-        console.log('Diff checkin ' + n);
+        let n = getDifferenceMonth(null, null, checkInMonth, checkInYear);
         for (let i = 0; i<n; i++){
             this.elements.getNextMonthBtn().click({force: true});
         }
         cy.get('.month-table > tbody').eq(0).find('tr > td').contains(checkInDay).click();
         
         // CheckOut
-        /*
-        let checkOutDay = parseInt(checkOut.substring(3,5)) > 9 ? parseInt(checkOut.substring(3,5)) : parseInt(checkOut.substring(4,5));
+        let checkOutDay = parseInt(checkOut.substring(3,5));
         let checkOutMonth = parseInt(checkOut.substring(0,2)) - 1;
         let checkOutYear = checkOut.substring(6,10);
 
@@ -66,7 +63,6 @@ class BookingHomePageObject{
             this.elements.getNextMonthBtn().click({force: true});
         }
         cy.get('.month-table > tbody').eq(1).find('tr > td').contains(checkOutDay).click({force: true});
-        */
     }
 
     findAHotel () {
@@ -78,6 +74,7 @@ class BookingHomePageObject{
         cy.intercept('https://www.hotwire.com/graphql')
         cy.intercept('https://www.hotels.com/trvl-px/v2/get',{});
         cy.intercept('https://www.hotwire.com/api/bucketing/v1/evaluateExperimentsAndLog');
+        cy.intercept('https://www.hotwire.com/api/uisprime/track');
         cy.visit('https://www.hotwire.com/flights/');
     }
 }
